@@ -1,5 +1,6 @@
 # simple_comfyui_wrapper
 
+[中文readme](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/README_CN.md)
 Simple ComfyUI backend WebSocket API wrapper  
 Simple frontend + RESTful API backend  
 
@@ -8,6 +9,8 @@ Features:
 - User management
 - Simple FIFO scheduler
 - Keep images from ComfyUI output
+- Comfyui separate network
+- Easy and simple logic
 - 2 examples for text input and image input
 
 ---
