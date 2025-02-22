@@ -1,0 +1,191 @@
+{
+  "13": {
+    "inputs": {
+      "width": 832,
+      "height": 1248,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "24": {
+    "inputs": {
+      "stop_at_clip_layer": -2,
+      "clip": [
+        "30",
+        1
+      ]
+    },
+    "class_type": "CLIPSetLastLayer",
+    "_meta": {
+      "title": "CLIP Set Last Layer"
+    }
+  },
+  "25": {
+    "inputs": {
+      "text": [
+        "33",
+        0
+      ],
+      "token_normalization": "none",
+      "weight_interpretation": "comfy",
+      "clip": [
+        "24",
+        0
+      ]
+    },
+    "class_type": "BNK_CLIPTextEncodeAdvanced",
+    "_meta": {
+      "title": "CLIP Text Encode (Advanced)"
+    }
+  },
+  "26": {
+    "inputs": {
+      "text": [
+        "41",
+        0
+      ],
+      "token_normalization": "none",
+      "weight_interpretation": "comfy",
+      "clip": [
+        "24",
+        0
+      ]
+    },
+    "class_type": "BNK_CLIPTextEncodeAdvanced",
+    "_meta": {
+      "title": "CLIP Text Encode (Advanced)"
+    }
+  },
+  "27": {
+    "inputs": {
+      "samples": [
+        "32",
+        0
+      ],
+      "vae": [
+        "30",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "30": {
+    "inputs": {
+      "ckpt_name": "lighting/leosamsHelloworldXL_hw50EulerALightning.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "32": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": [
+        "54",
+        0
+      ],
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "euler_ancestral_cfg_pp",
+      "scheduler": "karras",
+      "start_at_step": 0,
+      "end_at_step": 317,
+      "return_with_leftover_noise": "enable",
+      "model": [
+        "30",
+        0
+      ],
+      "positive": [
+        "26",
+        0
+      ],
+      "negative": [
+        "25",
+        0
+      ],
+      "latent_image": [
+        "13",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced)"
+    }
+  },
+  "33": {
+    "inputs": {
+      "text": "(worst quality,low resolution,bad hands,blur),distorted,twisted,watermark,open mouth,teeth,"
+    },
+    "class_type": "CR Text",
+    "_meta": {
+      "title": "🔤 CR Text"
+    }
+  },
+  "35": {
+    "inputs": {
+      "text": "Specular reflection,sharp focus,adding subtle sparkle,strong visual impact,sad and cold theme,"
+    },
+    "class_type": "CR Text",
+    "_meta": {
+      "title": "🔤 CR Text"
+    }
+  },
+  "41": {
+    "inputs": {
+      "action": "append",
+      "tidy_tags": "yes",
+      "text_a": [
+        "42",
+        0
+      ],
+      "text_b": [
+        "35",
+        0
+      ],
+      "text_c": "",
+      "result": "painting style of A portrait of a chinese girl,upper body,earring,neck wearing, jewelry,\noutdoor, trousers,Slim-fit black turtleneck sweater, Specular reflection face,wet and sweat skin texture, make-up lightly,\nsharp focus,adding subtle sparkle,high contrast, ethereal atmosphere,\nstrong visual impact,sad and cold theme,"
+    },
+    "class_type": "StringFunction|pysssss",
+    "_meta": {
+      "title": "String Function 🐍"
+    }
+  },
+  "42": {
+    "inputs": {
+      "text": "painting style of A  portrait of a chinese girl ,upper body ,earring,neck wearing, jewelry,\noutdoor, trousers ,Slim-fit black turtleneck sweater,"
+    },
+    "class_type": "CR Text",
+    "_meta": {
+      "title": "🔤 CR Text"
+    }
+  },
+  "54": {
+    "inputs": {
+      "seed": -1
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "Seed (rgthree)"
+    }
+  },
+  "61": {
+    "inputs": {
+      "images": [
+        "27",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  }
+}

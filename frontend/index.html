@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComfyUI API</title>
+<style>
+    /* 全局样式 */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* 容器样式 */
+    .container {
+        background-color: #fff;
+        width: 90%;
+        max-width: 1200px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    /* 标题样式 */
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 28px;
+        color: #007bff;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 24px;
+        color: #555;
+    }
+
+    /* 表单部分样式 */
+    .form-section {
+        flex: 1;
+        min-width: 300px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s;
+    }
+
+    .form-section:hover {
+        transform: translateY(-5px);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="file"]:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    /* 登录部分样式 */
+    #loginSection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    #loginSection input[type="text"],
+    #loginSection input[type="password"] {
+        margin-bottom: 10px;
+    }
+
+    /* 图片上传区域样式 */
+    #uploadedImage {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    #uploadedImage img {
+        max-width: 100%;
+        margin-top: 20px;
+        border-radius: 4px;
+    }
+
+    /* 响应区域样式 */
+    #response,
+    #promptResponse {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f1f1f1;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <!-- 登录部分 -->
+        <div id="loginSection" class="form-section">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div id="loginResponse"></div>
+        </div>
+
+        <!-- 上传和处理图片部分 -->
+        <div id="uploadSection" class="form-section">
+            <h2>Upload and Process Image</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="fileInput">Image Upload:</label>
+                    <input type="file" id="fileInput" name="file" accept="image/*" required>
+                </div>
+            </form>
+            <div id="uploadedImage"></div>
+            <form id="processForm">
+                <button type="submit">Process Image</button>
+            </form>
+            <div id="response"></div>
+        </div>
+
+        <!-- 提示处理部分 -->
+        <div id="promptSection" class="form-section">
+            <h2>Prompt Processing</h2>
+            <form id="promptForm">
+                <div class="form-group">
+                    <label for="promptText">Prompt Text:</label>
+                    <input type="text" id="promptText" name="promptText" required>
+                </div>
+                <button type="submit">Submit Prompt</button>
+            </form>
+            <div id="promptResponse"></div>
+        </div>
+    </div>
+
+    <script>
+// Centralized error handler function
+function handleError(error, responseDiv) {
+    error.json().then(data => {
+        if (data.error === 'Unauthorized') {
+            clearToken();
+            document.getElementById('loginSection').style.display = 'flex';
+            document.getElementById('uploadSection').style.display = 'none';
+            document.getElementById('promptSection').style.display = 'none';
+            responseDiv.textContent = 'Session expired. Please log in again.';
+            document.getElementById('promptResponse').textContent = '';
+        } else {
+            responseDiv.style.color = 'red';
+            responseDiv.textContent = 'An error occurred: ' + data.error;
+        }
+    }).catch(() => {
+        responseDiv.style.color = 'red';
+        responseDiv.textContent = 'An error occurred: Unable to parse error response.';
+    });
+}
+        // Function to set token in localStorage
+        function setToken(token) {
+            localStorage.setItem('token', token);
+        }
+
+        // Function to get token from localStorage
+        function getToken() {
+            return localStorage.getItem('token');
+        }
+
+        // Function to clear token from localStorage
+        function clearToken() {
+            localStorage.removeItem('token');
+        }
+
+        // Function to check if token exists
+        function isTokenAvailable() {
+            const token = getToken();
+            return !!token ;
+        }
+
+
+        // Show login section if token is not available, otherwise hide login and show other sections
+if (!isTokenAvailable()) {
+    document.getElementById('loginSection').style.display = 'flex';
+    document.getElementById('uploadSection').style.display = 'none';
+    document.getElementById('promptSection').style.display = 'none';
+} else {
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('uploadSection').style.display = 'block';
+    document.getElementById('promptSection').style.display = 'block';
+}
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const loginData = {
+                username: username,
+                password: password
+            };
+
+fetch('http://127.0.0.1:5000/login', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(loginData)
+})
+.then(response => response.json())
+.then(data => {
+    if (data.token) {
+        setToken(data.token);
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('loginResponse').textContent = 'Logged in successfully!';
+        // Show other sections after login
+        document.getElementById('uploadSection').style.display = 'flex';
+        document.getElementById('promptSection').style.display = 'flex';
+    } else {
+        document.getElementById('loginResponse').style.color = 'red';
+        document.getElementById('loginResponse').textContent = 'Invalid credentials';
+    }
+})
+.catch(error => handleError(error, document.getElementById('loginResponse')));
+        });
+
+        // Function to add token to headers
+        function addTokenToHeaders(headers) {
+            const token = getToken();
+            if (token) {
+                headers['Authorization'] = 'Bearer ' + token;
+            }
+            return headers;
+        }
+
+        // Handle file upload form submission
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            event.preventDefault();
+            const form = document.getElementById('uploadForm');
+            const formData = new FormData(form);
+
+            // Step 1: Upload the file
+fetch('http://127.0.0.1:5000/upload', {
+    method: 'POST',
+    headers: addTokenToHeaders({}),
+    body: formData
+})
+.then(response => response.json())
+.then(data => {
+    if (data.error) {
+        throw new Error(data.error);
+    }
+
+    // Display the uploaded image
+    const uploadedImageDiv = document.getElementById('uploadedImage');
+    const img = document.createElement('img');
+    img.src = data.upload_path;
+    img.alt = 'Uploaded Image';
+    uploadedImageDiv.innerHTML = '';
+    uploadedImageDiv.appendChild(img);
+
+    // Show the process form
+    document.getElementById('processForm').style.display = 'block';
+})
+.catch(error => handleError(error, document.getElementById('response')));
+        });
+
+        // Handle process image form submission
+        document.getElementById('processForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const imageUrl = document.querySelector('#uploadedImage img').src;
+
+            const processData = {
+                imageUrl: imageUrl
+            };
+
+            // Step 2: Process the image
+fetch('http://127.0.0.1:5000/api/process_img', {
+    method: 'POST',
+    headers: addTokenToHeaders({
+        'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify(processData)
+})
+.then(response => response.json())
+.then(finalData => {
+    const responseDiv = document.getElementById('response');
+    if (finalData.error) {
+        responseDiv.style.color = 'red';
+        responseDiv.textContent = 'Error: ' + finalData.error;
+        if (finalData.error.includes('Invalid credentials')) {
+            clearToken();
+            document.getElementById('loginSection').style.display = 'flex';
+            document.getElementById('uploadSection').style.display = 'none';
+            document.getElementById('promptSection').style.display = 'none';
+            alert('Invalid credentials. Please log in again.');
+        }
+    } else {
+        responseDiv.style.color = 'green';
+        responseDiv.textContent = finalData.message;
+
+        const img = document.createElement('img');
+        img.src = finalData.imageUrl;
+        img.alt = 'Processed Image';
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+        img.style.marginTop = '10px';
+        responseDiv.appendChild(img);
+    }
+})
+.catch(error => handleError(error, document.getElementById('response')));
+        });
+
+        // Handle prompt processing form submission
+        document.getElementById('promptForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const promptText = document.getElementById('promptText').value;
+            const promptData = {
+                text: promptText
+            };
+
+            // Step 3: Process the prompt
+fetch('http://127.0.0.1:5000/api/prompt_process', {
+    method: 'POST',
+    headers: addTokenToHeaders({
+        'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify(promptData)
+})
+.then(response => response.json())
+.then(finalData => {
+    const promptResponseDiv = document.getElementById('promptResponse');
+    if (finalData.error) {
+        promptResponseDiv.style.color = 'red';
+        promptResponseDiv.textContent = 'Error: ' + finalData.error;
+        if (finalData.error.includes('Invalid credentials')) {
+            clearToken();
+            document.getElementById('loginSection').style.display = 'flex';
+            document.getElementById('uploadSection').style.display = 'none';
+            document.getElementById('promptSection').style.display = 'none';
+            alert('Invalid credentials. Please log in again.');
+        }
+    } else {
+        promptResponseDiv.style.color = 'green';
+        promptResponseDiv.textContent = finalData.message;
+
+        const img = document.createElement('img');
+        img.src = finalData.imageUrl;
+        img.alt = 'Processed Image';
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+        img.style.marginTop = '10px';
+        promptResponseDiv.appendChild(img);
+    }
+})
+.catch(error => handleError(error, document.getElementById('promptResponse')));
+        });
+    </script>
+</body>
+</html>

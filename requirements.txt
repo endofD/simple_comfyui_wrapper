@@ -1,0 +1,13 @@
+blinker
+cffi
+click
+cryptography
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+pip
+pycparser
+PyJWT
+websocket-client
+Werkzeug
