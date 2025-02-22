@@ -72,3 +72,41 @@ change value
 
 
 ![example_img4](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/4.png)
+
+
+
+
+# add workflow
+
+
+
+1 copy the workflow api file into `data`
+
+2 create a new `@app.route('/api/new_api', methods=['POST'])`  
+load/overwrite value  and  **fill** the **task**
+
+```python
+(prompt,ret,) = get_promp_from_json('api_test.json')
+data = request.get_json()
+text = data.get('text')
+task['prompt'] = prompt'
+task['text'] = text
+task['call'] = api1
+```
+get 
+
+
+```python
+def api1(task):   #t2i    input: text
+    prompt = task['prompt']
+    prompt['42']['inputs']['text'] = task['text']
+    output_images = process_comfyui(prompt)
+    (p,) = save_img_result("comfyui_img","t2i",output_images[0])
+    return f"{FLASK_ADDR}/{p}"
+
+```
+
+just follow this template 
+
+
+HAPPY hacking
