@@ -186,7 +186,6 @@ def get_queue_nr(login_user):
     return None
 
 def wait_cache_img(login_user,timeout=60):
-    print("====wait cache in=======")
     tt=0 
     (img_url,intime)=(None,False)
     while(tt <= timeout):

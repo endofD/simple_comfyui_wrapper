@@ -62,11 +62,13 @@ change value
 
 
 
+[example_img1](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/1.png)
 
 
+[example_img2](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/2.png)
 
 
+[example_img3](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/3.png)
 
 
-
-
+[example_img4](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/4.png)
