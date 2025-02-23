@@ -74,7 +74,7 @@ def fifo_scheduler():
     global track_order
     while True:
         user = task_queue.get()
-        order_update_status(user,'excuting')
+        order_update_status(user,'executing')
         task=track_order[user]['t']
         p=task['call'](task) #wait
         order_update_status(user,'done',p)
@@ -240,9 +240,7 @@ def process_text():
     login_user = get_user_from_token()
     #check the finished task in cache_result
     img_result = check_cache(login_user)
-    print(f" try get cache  in user {login_user}")
     if (img_result):
-        print(f"--- found cache record for  {login_user}")
         return jsonify({ 'imageUrl': img_result,'message': "Cache result processed" }) ,200
 
     #check the queue status
@@ -298,7 +296,6 @@ def process_img():
     login_user = get_user_from_token()
     #check the finished task in cache_result
     img_result = check_cache(login_user)
-    print(f" try get cache  in user {login_user}")
     if (img_result):
         return jsonify({ 'imageUrl': img_result,'message': "Prompt processed" }) ,200
 
