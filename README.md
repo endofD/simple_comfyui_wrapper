@@ -89,10 +89,12 @@ Two examples are provided for text input and image input.
 ![Example Image 4](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/4.png)
 
 
-If you have input image use : ![load_img_from_url](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/input_img.png) 
+If you have input image use : 
+![load_img_from_url](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/input_img.png) 
 
 
-please img preview as  image output ![image_preview_node](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/output_img.png)
+please img preview as  image output 
+![image_preview_node](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/output_img.png)
 
 ---
 
