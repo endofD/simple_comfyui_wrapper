@@ -88,6 +88,12 @@ Two examples are provided for text input and image input.
 
 ![Example Image 4](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/4.png)
 
+
+If you have input image use : ![load_img_from_url](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/input_img.png) 
+
+
+please img preview as  image output ![image_preview_node](https://github.com/endofD/simple_comfyui_wrapper/raw/refs/heads/main/screen_shot/output_img.png)
+
 ---
 
 ## Adding a New Workflow
@@ -115,7 +121,7 @@ Two examples are provided for text input and image input.
        prompt = task['prompt']
        prompt['42']['inputs']['text'] = task['text']
        output_images = process_comfyui(prompt)
-       (p,) = save_img_result("comfyui_img", "t2i", output_images[0])
+       (p,) = save_img_result("comfyui_img", "t2i", output_images[0])   #output_image array is all output image_preview 
        return f"{FLASK_ADDR}/{p}"
    ```
 
