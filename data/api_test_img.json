@@ -131,7 +131,7 @@
   },
   "35": {
     "inputs": {
-      "text": "Specular reflection,sharp focus,adding subtle sparkle,high contrast, ethereal atmosphere,\nstrong visual impact"
+      "text": "sharp focus,adding subtle sparkle,strong visual impact"
     },
     "class_type": "CR Text",
     "_meta": {
@@ -151,7 +151,7 @@
         0
       ],
       "text_c": "",
-      "result": "The image is a portrait of a young Asian woman with dark hair. She is standing in a park or garden with trees in the background. The woman is wearing a black turtleneck top with a high neckline and long sleeves. She has a serious expression on her face and is looking directly at the camera. Her hair is styled in a sleek, straight look and she is wearing minimal makeup. The overall mood of the image is serious and contemplative., Specular reflection on face,wet and sweat skin texture, make-up lightly,chinese asian face,\nsharp focus,adding subtle sparkle,high contrast, ethereal atmosphere,\nstrong visual impact,sad and cold theme,"
+      "result": "The image is a digital art piece that appears to be a portrait of a young woman's face. The background is made up of various squares and rectangles in different colors and textures, creating a mosaic-like effect. The woman's expression is serious and her eyes are looking directly at the viewer. Her hair is styled in loose curls and she is wearing a black top with a high neckline. The overall mood of the image is dark and moody, with a sense of mystery and intrigue., sharp focus,adding subtle sparkle,strong visual impact"
     },
     "class_type": "StringFunction|pysssss",
     "_meta": {
@@ -198,9 +198,9 @@
       "num_beams": 3,
       "do_sample": true,
       "output_mask_select": "",
-      "seed": 240861021595741,
+      "seed": 470601611997174,
       "image": [
-        "69",
+        "83",
         0
       ],
       "florence2_model": [
@@ -227,7 +227,7 @@
   "66": {
     "inputs": {
       "mode": "raw value",
-      "displaytext": "The image is a portrait of a young Asian woman with dark hair. She is standing in a park or garden with trees in the background. The woman is wearing a black turtleneck top with a high neckline and long sleeves. She has a serious expression on her face and is looking directly at the camera. Her hair is styled in a sleek, straight look and she is wearing minimal makeup. The overall mood of the image is serious and contemplative.",
+      "displaytext": "The image is a digital art piece that appears to be a portrait of a young woman's face. The background is made up of various squares and rectangles in different colors and textures, creating a mosaic-like effect. The woman's expression is serious and her eyes are looking directly at the viewer. Her hair is styled in loose curls and she is wearing a black top with a high neckline. The overall mood of the image is dark and moody, with a sense of mystery and intrigue.",
       "input": [
         "62",
         2
@@ -245,6 +245,18 @@
     "class_type": "Load Image From Url (mtb)",
     "_meta": {
       "title": "Load Image From Url (mtb)"
+    }
+  },
+  "83": {
+    "inputs": {
+      "images": [
+        "69",
+        0
+      ]
+    },
+    "class_type": "Images to RGB",
+    "_meta": {
+      "title": "Images to RGB"
     }
   }
 }

@@ -25,10 +25,7 @@
   },
   "25": {
     "inputs": {
-      "text": [
-        "33",
-        0
-      ],
+      "text": "nsfw,naked,cleavage,(worst quality,low resolution,bad hands,blur),distorted,twisted,watermark,open mouth,teeth,",
       "token_normalization": "none",
       "weight_interpretation": "comfy",
       "clip": [
@@ -88,7 +85,7 @@
     "inputs": {
       "add_noise": "enable",
       "noise_seed": [
-        "54",
+        "62",
         0
       ],
       "steps": 8,
@@ -120,18 +117,9 @@
       "title": "KSampler (Advanced)"
     }
   },
-  "33": {
-    "inputs": {
-      "text": "(worst quality,low resolution,bad hands,blur),distorted,twisted,watermark,open mouth,teeth,"
-    },
-    "class_type": "CR Text",
-    "_meta": {
-      "title": "🔤 CR Text"
-    }
-  },
   "35": {
     "inputs": {
-      "text": "Specular reflection,sharp focus,adding subtle sparkle,strong visual impact,sad and cold theme,"
+      "text": "sharp focus,adding subtle sparkle,strong visual impact"
     },
     "class_type": "CR Text",
     "_meta": {
@@ -151,7 +139,7 @@
         0
       ],
       "text_c": "",
-      "result": "painting style of A portrait of a chinese girl,upper body,earring,neck wearing, jewelry,\noutdoor, trousers,Slim-fit black turtleneck sweater, Specular reflection face,wet and sweat skin texture, make-up lightly,\nsharp focus,adding subtle sparkle,high contrast, ethereal atmosphere,\nstrong visual impact,sad and cold theme,"
+      "result": "painting style of A portrait of a chinese girl,upper body,earring,neck wearing, jewelry,outdoor, trousers,Slim-fit black turtleneck sweater, sharp focus,adding subtle sparkle,strong visual impact"
     },
     "class_type": "StringFunction|pysssss",
     "_meta": {
@@ -160,20 +148,11 @@
   },
   "42": {
     "inputs": {
-      "text": "painting style of A  portrait of a chinese girl ,upper body ,earring,neck wearing, jewelry,\noutdoor, trousers ,Slim-fit black turtleneck sweater,"
+      "text": "painting style of A  portrait of a chinese panda ,full body ,earring,neck wearing, jewelry,outdoor, trousers ,Slim-fit black turtleneck sweater,"
     },
     "class_type": "CR Text",
     "_meta": {
       "title": "🔤 CR Text"
-    }
-  },
-  "54": {
-    "inputs": {
-      "seed": -1
-    },
-    "class_type": "Seed (rgthree)",
-    "_meta": {
-      "title": "Seed (rgthree)"
     }
   },
   "61": {
@@ -186,6 +165,15 @@
     "class_type": "PreviewImage",
     "_meta": {
       "title": "Preview Image"
+    }
+  },
+  "62": {
+    "inputs": {
+      "seed": -1
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "Seed (rgthree)"
     }
   }
 }
